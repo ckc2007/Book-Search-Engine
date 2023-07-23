@@ -20,4 +20,12 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
   },
+  Mutation: {
+    login: async (parent, { email, password }) => {},
+    addUser: async (parent, args) => {},
+    saveBook: async (parent, { bookData }, context) => {},
+    removeBook: async (parent, { bookId }, context) => {},
+  },
 };
+
+module.exports = resolvers;
