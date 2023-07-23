@@ -53,7 +53,16 @@ const resolvers = {
       return { token, user };
     },
     // context.user holds the logged-in user's data
-    saveBook: async (parent, { bookData }, context) => {},
+    saveBook: async (parent, { bookData }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id,
+          { $addToSet: { savedBooks: bookData } },
+          { new: true }
+        ).populate("savedBooks");
+
+        return updatedUser;
+    },
     removeBook: async (parent, { bookId }, context) => {},
   },
 };
