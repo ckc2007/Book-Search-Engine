@@ -21,4 +21,11 @@ export const getMe = (token) => {
   });
 };
 
+export const createUser = (userData) => {
+  return client.mutate({
+    mutation: ADD_USER,
+    variables: userData,
+  });
+};
+
 export default client;
