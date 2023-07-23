@@ -28,4 +28,35 @@ export const createUser = (userData) => {
   });
 };
 
+export const loginUser = (userData) => {
+  return client.mutate({
+    mutation: LOGIN_USER,
+    variables: userData,
+  });
+};
+
+export const saveBook = (bookData, token) => {
+  return client.mutate({
+    mutation: SAVE_BOOK,
+    variables: { bookData },
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const deleteBook = (bookId, token) => {
+  return client.mutate({
+    mutation: REMOVE_BOOK,
+    variables: { bookId },
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const searchGoogleBooks = (query) => {
+  return fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+};
+
 export default client;
