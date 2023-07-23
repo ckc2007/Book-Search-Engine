@@ -62,11 +62,26 @@ const resolvers = {
         ).populate("savedBooks");
 
         return updatedUser;
+      }
+
+      throw new AuthenticationError("Please login in to save a book");
     },
-    removeBook: async (parent, { bookId }, context) => {},
+    removeBook: async (parent, { bookId }, context) => {
+      if (context.user) {
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id,
+          { $pull: { savedBooks: { bookId } } },
+          { new: true }
+        ).populate("savedBooks");
+
+        return updatedUser;
+      }
+
+      throw new AuthenticationError(
+        "Please login to remove a book from your saved books"
+      );
+    },
   },
 };
 
 module.exports = resolvers;
-
-// TODO: mutation logic
