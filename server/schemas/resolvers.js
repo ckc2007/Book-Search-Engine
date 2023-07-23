@@ -20,9 +20,14 @@ const resolvers = {
       throw new AuthenticationError("Not logged in");
     },
   },
+  //   write operations
   Mutation: {
+    //   authenticate the user based on the provided credentials (email and password)
     login: async (parent, { email, password }) => {},
+    // args is registration data provided by client (username, email, password)
+    // create a new user and return Auth object that contains a token and user data
     addUser: async (parent, args) => {},
+    // context.user holds the logged-in user's data
     saveBook: async (parent, { bookData }, context) => {},
     removeBook: async (parent, { bookId }, context) => {},
   },
