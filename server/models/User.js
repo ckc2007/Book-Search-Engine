@@ -23,8 +23,9 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // set savedBooks to be an array of data that adheres to the bookSchema
-    savedBooks: [bookSchema],
+    // set 'savedBooks' to be an array of data that adheres to the bookSchema << old
+    // use the Book type as the subdocument schema - updated
+    savedBooks: [Book],
   },
   // set this to use virtual below
   {
