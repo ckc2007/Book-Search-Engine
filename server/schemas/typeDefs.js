@@ -10,6 +10,14 @@ const typeDefs = gql`
     link: String
     title: String!
   }
+
+  type User {
+    _id: ID!
+    username: String!
+    email: String!
+    savedBooks: [Book]
+    bookCount: Int
+  }
 `;
 
 module.exports = typeDefs;
