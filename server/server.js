@@ -5,7 +5,7 @@ const db = require("./config/connection");
 const { typeDefs, resolvers } = require("./schemas");
 const routes = require("./routes");
 // will apply globally
-const { authMiddleware } = require('./utils/auth');
+const { authMiddleware } = require("./utils/auth");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -28,6 +28,8 @@ app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
+// Apply authentication middleware globally
+app.use(authMiddleware);
 
 app.use(routes);
 
