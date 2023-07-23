@@ -42,7 +42,16 @@ const resolvers = {
     },
     // args is registration data provided by client (username, email, password)
     // create a new user and return Auth object that contains a token and user data
-    addUser: async (parent, args) => {},
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+
+      if (!user) {
+        throw new AuthenticationError("Couldn't create user");
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
     // context.user holds the logged-in user's data
     saveBook: async (parent, { bookData }, context) => {},
     removeBook: async (parent, { bookId }, context) => {},
