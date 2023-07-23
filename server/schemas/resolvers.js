@@ -55,6 +55,10 @@ const resolvers = {
     // context.user holds the logged-in user's data
     saveBook: async (parent, { bookData }, context) => {
       if (context.user) {
+        if (!bookData) {
+          throw new Error("Book data is required");
+        }
+
         const updatedUser = await User.findByIdAndUpdate(
           context.user._id,
           { $addToSet: { savedBooks: bookData } },
@@ -64,10 +68,14 @@ const resolvers = {
         return updatedUser;
       }
 
-      throw new AuthenticationError("Please login in to save a book");
+      throw new AuthenticationError("Please log in to save a book");
     },
     removeBook: async (parent, { bookId }, context) => {
       if (context.user) {
+        if (!bookId) {
+          throw new Error("Book ID is required");
+        }
+
         const updatedUser = await User.findByIdAndUpdate(
           context.user._id,
           { $pull: { savedBooks: { bookId } } },
@@ -78,7 +86,7 @@ const resolvers = {
       }
 
       throw new AuthenticationError(
-        "Please login to remove a book from your saved books"
+        "Please log in to remove a book from your saved books"
       );
     },
   },
