@@ -11,3 +11,14 @@ const client = new ApolloClient({
   uri: "/graphql",
   cache: new InMemoryCache(),
 });
+
+export const getMe = (token) => {
+  return client.query({
+    query: GET_ME,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export default client;
