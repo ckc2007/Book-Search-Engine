@@ -33,12 +33,21 @@ const SignupForm = () => {
       event.stopPropagation();
     }
 
-    try {
-      const response = await createUser(userFormData);
+    // try {
+    //   const response = await createUser(userFormData);
 
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
+    //   if (!response.ok) {
+    //     throw new Error("something went wrong!");
+    //   }
+    try {
+      // use the addUser mutation with the useMutation hook
+      const { data } = await addUser({
+        variables: {
+          username: userFormData.username,
+          email: userFormData.email,
+          password: userFormData.password,
+        },
+      });
 
       const { token, user } = await response.json();
       console.log(user);
