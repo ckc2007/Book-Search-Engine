@@ -37,8 +37,9 @@ const LoginForm = () => {
         },
       });
 
-      const { token, user } = await response.json();
-      console.log(user);
+      // const { token, user } = await response.json();
+      // console.log(user);
+      const { token, user } = data.login;
       Auth.login(token);
     } catch (err) {
       console.error(err);
@@ -50,6 +51,7 @@ const LoginForm = () => {
       email: "",
       password: "",
     });
+    setValidated(true);
   };
 
   return (
