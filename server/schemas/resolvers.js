@@ -38,7 +38,12 @@ const resolvers = {
       }
 
       const token = signToken(user);
-      return { token, user };
+      return {
+        token,
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+      };
     },
     // args is registration data provided by client (username, email, password)
     // create a new user and return Auth object that contains a token and user data
