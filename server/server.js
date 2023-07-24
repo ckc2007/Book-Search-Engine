@@ -26,11 +26,8 @@ app.use(express.json());
 const startApolloServer = async () => {
   await server.start();
   // Apply ApolloServer and middleware
-  server.applyMiddleware({ app, path: "/graphql" });
-
-  // Apply authentication middleware globally
-
   app.use(authMiddleware);
+  server.applyMiddleware({ app, path: "/graphql" });
 
   // if we're in production, serve client/build as static assets
   if (process.env.NODE_ENV === "production") {
