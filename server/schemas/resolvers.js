@@ -56,7 +56,12 @@ const resolvers = {
         const token = signToken(user);
 
         // Return the token and user data in the response
-        return { token, user };
+        return {
+          token,
+          _id: user._id,
+          username: user.username,
+          email: user.email,
+        };
       } catch (err) {
         // If there's an error during user creation or token signing, log the error
         console.error(err);
