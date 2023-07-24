@@ -1,5 +1,5 @@
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
-import { GET_ME } from "./graphql/queries";
+import { GET_ME } from "../graphql/queries";
 import {
   LOGIN_USER,
   ADD_USER,
