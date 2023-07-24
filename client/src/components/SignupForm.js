@@ -42,10 +42,13 @@ const SignupForm = () => {
           },
         });
 
+        // debug here:
         // Check the response from the mutation and access the correct field
-        const { createUser } = data; // Update 'createUser' to the correct field returned by your mutation
+        // Update 'createUser' to the correct field returned by your mutation
+        // Make sure to access the token from the correct field
 
-        const { token } = createUser; // Make sure to access the token from the correct field
+        const { token } = data.addUser;
+
         // console.log(user);
         authService.login(token);
       } catch (err) {

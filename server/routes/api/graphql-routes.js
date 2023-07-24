@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { graphqlHTTP } = require("express-graphql");
-const { typeDefs, resolvers } = require("../../schemas");
+const { typeDefs, resolvers } = require("../../schemas/index");
 console.log(typeDefs, resolvers);
 
 const { authMiddleware } = require("../../utils/auth");
@@ -18,7 +18,7 @@ router.use(
     // define root resolver object, use functions in resolvers
     rootValue: resolvers,
     // Set this to false in production to disable the GraphiQL interface
-    graphiql: true,
+    graphiql: false,
   })
 );
 
