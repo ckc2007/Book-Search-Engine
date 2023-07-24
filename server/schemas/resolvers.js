@@ -43,14 +43,27 @@ const resolvers = {
     // args is registration data provided by client (username, email, password)
     // create a new user and return Auth object that contains a token and user data
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+      try {
+        // Attempt to create a new user
+        const user = await User.create({ username, email, password });
 
-      if (!user) {
-        throw new AuthenticationError("Couldn't create user");
+        if (!user) {
+          // If user creation fails, throw an error
+          throw new Error("Couldn't create user");
+        }
+
+        // If user creation is successful, sign a token for the new user
+        const token = signToken(user);
+
+        // Return the token and user data in the response
+        return { token, user };
+      } catch (err) {
+        // If there's an error during user creation or token signing, log the error
+        console.error(err);
+
+        // Throw an authentication error to be handled by Apollo Server
+        throw new AuthenticationError("Failed to create user");
       }
-
-      const token = signToken(user);
-      return { token, user };
     },
     // context.user holds the logged-in user's data
     saveBook: async (parent, { bookData }, context) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
-import Auth from "../utils/auth";
+import { authService } from "../utils/auth";
 import { saveBook, searchGoogleBooks } from "../utils/API";
 import { saveBookIds, getSavedBookIds } from "../utils/localStorage";
 
@@ -58,7 +58,7 @@ const SearchBooks = () => {
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
     // get token
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    const token = authService.loggedIn() ? authService.getToken() : null;
 
     if (!token) {
       return false;
@@ -127,7 +127,7 @@ const SearchBooks = () => {
                     <Card.Title>{book.title}</Card.Title>
                     <p className="small">Authors: {book.authors}</p>
                     <Card.Text>{book.description}</Card.Text>
-                    {Auth.loggedIn() && (
+                    {authService.loggedIn() && (
                       <Button
                         disabled={savedBookIds?.some(
                           (savedBookId) => savedBookId === book.bookId

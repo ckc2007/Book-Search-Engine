@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../graphql/mutations";
-import Auth from "../utils/auth";
+import {authService} from "../utils/auth";
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   // useMutation hook
-  const [loginUser, { error }] = useMutation(LOGIN_USER);
+  const [loginUser] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,8 +39,8 @@ const LoginForm = () => {
 
       // const { token, user } = await response.json();
       // console.log(user);
-      const { token, user } = data.login;
-      Auth.login(token);
+      const { token } = data.login;
+      authService.login(token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
