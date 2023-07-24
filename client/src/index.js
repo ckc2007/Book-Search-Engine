@@ -9,11 +9,11 @@ import ApolloClient from "./utils/ApolloClient";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <ApolloProvider client={ApolloClient}>
+    <ApolloProvider client={ApolloClient}>
+      <Router>
         <App />
-      </ApolloProvider>
-    </Router>
+      </Router>
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
