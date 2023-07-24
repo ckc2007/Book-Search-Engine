@@ -5,7 +5,7 @@ import {
   ADD_USER,
   SAVE_BOOK,
   REMOVE_BOOK,
-} from "./graphql/mutations";
+} from "../graphql/mutations";
 
 const client = new ApolloClient({
   uri: "/graphql",
