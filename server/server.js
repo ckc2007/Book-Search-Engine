@@ -2,8 +2,9 @@ const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 const db = require("./config/connection");
-const { typeDefs } = require("../server/schemas/typeDefs");
-const { resolvers } = require("../server/schemas/resolvers");
+const typeDefs = require("./schemas/typeDefs"); // Corrected import statement
+const resolvers = require("./schemas/resolvers");
+console.log(typeDefs, resolvers);
 const routes = require("./routes");
 // will apply globally
 const { authMiddleware } = require("./utils/auth");
@@ -16,9 +17,7 @@ app.use(authMiddleware);
 
 // Create instance of ApolloServer
 const server = new ApolloServer({
-  // graphQL schema
   typeDefs,
-  // graphQL resolvers
   resolvers,
 });
 

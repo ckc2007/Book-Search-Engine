@@ -31,30 +31,27 @@ const SignupForm = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    }
+    } else {
+      try {
+        // use the addUser mutation with the useMutation hook
+        const { data } = await addUser({
+          variables: {
+            username: userFormData.username,
+            email: userFormData.email,
+            password: userFormData.password,
+          },
+        });
 
-    // try {
-    //   const response = await createUser(userFormData);
+        // Check the response from the mutation and access the correct field
+        const { createUser } = data; // Update 'createUser' to the correct field returned by your mutation
 
-    //   if (!response.ok) {
-    //     throw new Error("something went wrong!");
-    //   }
-    try {
-      // use the addUser mutation with the useMutation hook
-      const { data } = await addUser({
-        variables: {
-          username: userFormData.username,
-          email: userFormData.email,
-          password: userFormData.password,
-        },
-      });
-
-      const { token } = data.createUser;
-      // console.log(user);
-      authService.login(token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
+        const { token } = createUser; // Make sure to access the token from the correct field
+        // console.log(user);
+        authService.login(token);
+      } catch (err) {
+        console.error(err);
+        setShowAlert(true);
+      }
     }
 
     setUserFormData({
