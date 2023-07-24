@@ -23,11 +23,11 @@ module.exports = {
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
-      next();
     } catch {
       console.error(err);
       return res.status(400).json({ message: "invalid token!" });
     }
+    next();
   },
   signToken: function ({ username, email, _id }) {
     const payload = { username, email, _id };
