@@ -1,18 +1,3 @@
-// import { ApolloClient, InMemoryCache } from "@apollo/client";
-
-// // store context
-// const client = new ApolloClient({
-//   // set graphQL endpoint to match server route
-//   // debug path
-//   uri: "/graphql",
-//   //   stores and manages the results of graphQL queries on the client-side
-//   cache: new InMemoryCache(),
-//   headers: {
-//     authorization: localStorage.getItem("token") || "",
-//   },
-// });
-
-// export default client;
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 

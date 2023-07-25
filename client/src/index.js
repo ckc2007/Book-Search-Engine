@@ -7,6 +7,8 @@ import "./index.css";
 import App from "./App";
 import ApolloClient from "./utils/ApolloClient";
 
+console.log(localStorage.getItem("token")); // Log the token
+
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={ApolloClient}>

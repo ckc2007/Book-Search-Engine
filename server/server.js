@@ -3,21 +3,23 @@ const { ApolloServer } = require("apollo-server-express");
 const path = require("path");
 const db = require("./config/connection");
 const { typeDefs, resolvers } = require("./schemas");
-const { authMiddleware } = require("./utils/auth");
+const { authMiddleware } = require("./utils/auth.js");
+
 const routes = require("./routes/index");
-const cors = require("cors");
+// const cors = require("cors");
 
 const PORT = process.env.PORT || 3001;
 
 const app = express(); // Declare app here
 
 // Enable CORS
-app.use(cors());
+// app.use(cors());
 
 // Create instance of ApolloServer
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: authMiddleware,
 });
 
 app.use(express.urlencoded({ extended: true }));
@@ -25,8 +27,7 @@ app.use(express.json());
 
 const startApolloServer = async () => {
   await server.start();
-  // Apply ApolloServer and middleware
-  app.use(authMiddleware);
+
   server.applyMiddleware({ app, path: "/graphql" });
 
   // if we're in production, serve client/build as static assets

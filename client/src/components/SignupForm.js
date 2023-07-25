@@ -41,13 +41,14 @@ const SignupForm = () => {
             password: userFormData.password,
           },
         });
-
+        console.log({data})
         // debug here:
         // Check the response from the mutation and access the correct field
         // Update 'createUser' to the correct field returned by your mutation
         // Make sure to access the token from the correct field
 
         const { token } = data.addUser;
+        console.log(token);
 
         // console.log(user);
         authService.login(token);
