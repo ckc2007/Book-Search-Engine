@@ -45,18 +45,22 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook(bookId, token);
-
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      const updatedUser = await response.json();
+      await deleteBook(bookId, token);
+  
+      // If the deleteBook function does not throw an error,
+      // it means the book was deleted successfully.
+      // So, update the user data and remove the book's id from localStorage.
+      const updatedUser = { ...userData };
+      updatedUser.savedBooks = updatedUser.savedBooks.filter(
+        (book) => book.bookId !== bookId
+      );
       setUserData(updatedUser);
-      // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {
       console.error(err);
+      // Handle the error message if needed
+      console.log("Error deleting the book:", err.message);
+      // ...
     }
   };
 
