@@ -14,11 +14,14 @@ const SearchBooks = () => {
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
 
+  // for saved message
+  const [showSavedMessage, setShowSavedMessage] = useState(false);
+
   // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveBookIds(savedBookIds);
-  });
+  }, [savedBookIds]);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
@@ -63,17 +66,25 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
-// debug
+    // debug
     try {
       const savedBook = await saveBook(bookToSave, token);
       // Handle the response from saveBook if needed
       console.log("Book saved:", savedBook);
-      // ...
+
+      // Show the saved message only when saving for the first time
+      if (!savedBookIds.includes(bookId)) {
+        setShowSavedMessage(true);
+        setTimeout(() => {
+          setShowSavedMessage(false);
+        }, 2000); // Hide the message after 2 seconds (adjust the time as needed)
+      }
+      // Update the savedBookIds state
+      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {
       console.error(err);
       // Handle the error message if needed
       console.log("Error saving the book:", err.message);
-      // ...
     }
   };
 
@@ -148,6 +159,7 @@ const SearchBooks = () => {
           })}
         </Row>
       </Container>
+      {showSavedMessage && <div>Saved!</div>}
     </>
   );
 };
