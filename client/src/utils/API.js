@@ -16,13 +16,24 @@ import {
 //   cache: new InMemoryCache(),
 // });
 
-export const getMe = (token) => {
-  return client.query({
-    query: GET_ME,
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+export const getMe = async (token) => {
+  try {
+    const response = await client.query({
+      query: GET_ME,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response || !response.data || !response.data.me) {
+      throw new Error("Invalid response or missing data.");
+    }
+
+    return response.data.me;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Error fetching user data.");
+  }
 };
 
 export const createUser = (userData) => {

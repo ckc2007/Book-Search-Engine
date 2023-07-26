@@ -20,13 +20,13 @@ const SavedBooks = () => {
           return false;
         }
 
-        const response = await getMe(token);
+        const user = await getMe(token);
 
-        if (!response.ok) {
+        if (!user) {
           throw new Error("something went wrong!");
         }
 
-        const user = await response.json();
+        // debugged response here not an HTTP response object, added user instead from getMe
         setUserData(user);
       } catch (err) {
         console.error(err);
