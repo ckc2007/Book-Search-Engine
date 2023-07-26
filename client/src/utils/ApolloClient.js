@@ -6,7 +6,7 @@ const httpLink = createHttpLink({
 });
 
 // DEBUGGGGGGG - needed to add export?
-export const authLink = setContext((_, { headers }) => {
+const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("token");
   // debug the issue here >> not console logging
   console.log("Token from ApolloClient:", token); // Add this line to log the token

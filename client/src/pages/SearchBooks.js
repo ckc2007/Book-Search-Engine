@@ -63,18 +63,17 @@ const SearchBooks = () => {
     if (!token) {
       return false;
     }
-
+// debug
     try {
-      const response = await saveBook(bookToSave, token);
-
-      if (!response.ok) {
-        throw new Error("something went wrong!");
-      }
-
-      // if book successfully saves to user's account, save book id to state
-      setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+      const savedBook = await saveBook(bookToSave, token);
+      // Handle the response from saveBook if needed
+      console.log("Book saved:", savedBook);
+      // ...
     } catch (err) {
       console.error(err);
+      // Handle the error message if needed
+      console.log("Error saving the book:", err.message);
+      // ...
     }
   };
 

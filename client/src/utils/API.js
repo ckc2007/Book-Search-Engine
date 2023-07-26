@@ -1,6 +1,6 @@
-import { ApolloClient, InMemoryCache } from "@apollo/client";
+// import { ApolloClient, InMemoryCache } from "@apollo/client";
 // import { authService } from "./auth";
-import client, { authLink } from "./ApolloClient";
+import client from "./ApolloClient";
 import { GET_ME } from "../graphql/queries";
 import {
   LOGIN_USER,
@@ -39,15 +39,26 @@ export const loginUser = (userData) => {
   });
 };
 
-export const saveBook = (bookData, token) => {
-  console.log("Token from client API:", token); // Add this line to log the token
-  return client.mutate({
-    mutation: SAVE_BOOK,
-    variables: { bookData },
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
+// API.js
+export const saveBook = async (bookData, token) => {
+  try {
+    const response = await client.mutate({
+      mutation: SAVE_BOOK,
+      variables: { bookData },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!response || !response.data || !response.data.saveBook) {
+      throw new Error("Invalid response or missing data.");
+    }
+
+    return response.data.saveBook;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Error saving the book.");
+  }
 };
 
 export const deleteBook = (bookId, token) => {
