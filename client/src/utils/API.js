@@ -1,4 +1,6 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
+// import { authService } from "./auth";
+import client, { authLink } from "./ApolloClient";
 import { GET_ME } from "../graphql/queries";
 import {
   LOGIN_USER,
@@ -7,10 +9,12 @@ import {
   REMOVE_BOOK,
 } from "../graphql/mutations";
 
-const client = new ApolloClient({
-  uri: "/graphql",
-  cache: new InMemoryCache(),
-});
+// debug
+// const client = new ApolloClient({
+//   link: authLink,
+//   uri: "/graphql",
+//   cache: new InMemoryCache(),
+// });
 
 export const getMe = (token) => {
   return client.query({
@@ -36,6 +40,7 @@ export const loginUser = (userData) => {
 };
 
 export const saveBook = (bookData, token) => {
+  console.log("Token from client API:", token); // Add this line to log the token
   return client.mutate({
     mutation: SAVE_BOOK,
     variables: { bookData },
